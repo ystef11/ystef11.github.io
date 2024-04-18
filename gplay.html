@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base herf="/" />
+    <link href="https://fonts.cdnfonts.com/css/gilroy-bold" rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico?" />
+
+    <script>
+      !function(t,e,n,s,a,c,i,o,p){t.AppsFlyerSdkObject=a,t.AF=t.AF||function(){(t.AF.q=t.AF.q||[]).push([Date.now()].concat(Array.prototype.slice.call(arguments)))},t.AF.id=t.AF.id||i,t.AF.plugins={},o=e.createElement(n),p=e.getElementsByTagName(n)[0],o.async=1,o.src="https://websdk.appsflyer.com?"+(c.length>0?"st="+c.split(",").sort().join(",")+"&":"")+(i.length>0?"af_id="+i:""),p.parentNode.insertBefore(o,p)}(window,document,"script",0,"AF","banners",{banners: {key: "324ee33f-8331-481c-8963-faa41b6349fd"}});
+      AF('banners', 'showBanner')
+      </script>
+  </head>
+
+  <body>
+    <nav class="header">
+      <div class="column">
+        <img src="images/appsflyerlogo.png" alt="AppsFlyer logo" />
+      </div>
+    </nav>
+    <div class="row container content-container mx-auto col-lg-8">
+      <h1 class="primary-heading">Game Landing Page Demo</h1>
+      <h2 class="primary-heading">Smart Script V2</h2>
+      <h3 class="my-4">
+        The source code for this page can be found
+        <a
+          target="_blank"
+          href="https://github.com/AppsFlyerSDK/appsflyer-sample-app-smartscript-demo-page/blob/master/index.html#L85"
+          >here</a
+        >.
+      </h3>
+      <hr />
+      <h4 class="secondary-heading">
+        Click on one of the store buttons below in order to fire AppsFlyer click
+        event
+      </h4>
+      <div class="stores-wrapper">
+        <a id="ios_link" class="store-image" href="#" target="_blank">
+          <img src="images/store_icons/apple.png" alt="Apple Appstore link" />
+        </a>
+
+        <a id="android_link" class="store-image" href="#" target="_blank">
+          <img
+            src="images/store_icons/android.png"
+            alt="Google Play store link"
+          />
+        </a>
+
+        <a id="steam_link" class="store-image" href="#" target="_blank">
+          <img src="images/store_icons/steam.png" alt="Steam store link" />
+        </a>
+
+        <a id="epic_link" class="store-image" href="#" target="_blank">
+          <img src="images/store_icons/epic.png" alt="Epic store link" />
+        </a>
+
+        <a id="quest_link" class="store-image" href="#" target="_blank">
+          <img
+            src="images/store_icons/oculus.png"
+            alt="Oculus quest store link"
+          />
+        </a>
+        <!-- <a id="microsoft_link" class="store-image" href="#" target="_blank">
+          <img src="images/store_icons/microsoft.png" alt="microsoft store link" />
+        </a> -->
+        <a id="nintendo_link" class="store-image" href="#" target="_blank">
+          <img
+            src="images/store_icons/switch.png"
+            alt="Nintendo Switch store link"
+          />
+        </a>
+        <a id="playstation_link" class="store-image" href="#" target="_blank">
+          <img src="images/store_icons/psn.png" alt="psn store link" />
+        </a>
+        <a id="xbox_link" class="store-image" href="#" target="_blank">
+          <img
+            src="images/store_icons/xbox.png"
+            alt="Xbox Microsoft store link"
+          />
+        </a>
+        <a id="nativepc_link" class="store-image" href="#" target="_blank">
+          <img
+            src="images/store_icons/nativepc.png"
+            alt="Native PC store link"
+          />
+        </a>
+      </div>
+      <div class="url-container">
+        <div class="output_url-container">
+          <h3 class="my-4">Flow diagram</h3>
+          <div>
+            <img
+              src="images/image_web_to_desktop.png"
+              alt="Web-to-Desktop flow"
+              width="1200"
+            />
+          </div>
+          <h3 class="my-4">Implementation guidelines</h3>
+          <h4><b>Fire an impression</b></h4>
+          <h4>
+            The impression is created using the Smart Script.<br />
+            In order to create an impression the Smart Script requires a OneLink
+            template, with cross-platform attribution enabled.<br />
+            Firing an impression includes the following steps:
+          </h4>
+          <ol>
+            <li>
+              Initializing the Smart Script arguments. These arguments will
+              carry the impression data, e.g. <code>media_source</code>,
+              <code>campaign</code>, <code>ad_name</code> etc.<br />
+              The argument values are retrieved from the incoming URL query
+              parameters (e.g. UTM parameters) or default values.<br />
+              Information regarding more Smart Script arguments can be found
+              <a
+                href="https://dev.appsflyer.com/hc/docs/dl_smart_script_v2#arguments"
+                >here</a
+              >.
+            </li>
+            <li>
+              Call the Smart Script method <code>generateOneLinkURL</code>. The
+              method generates the infrastructure to fire an impression in the
+              next step.<br />
+              Information regarding this method can be found
+              <a
+                href="https://dev.appsflyer.com/hc/docs/dl_smart_script_v2#manually-configure-the-script"
+                >here</a
+              >.<br />
+              <b>Note:</b> It is mandatory to add the
+              <code>af_xplatform</code> parameter to <code>afCustom</code> in
+              the <code>afParameters</code> object in order to enable
+              cross-platform attribution:
+              <pre>
+<code style="display:block; white-space:pre-wrap">var afParameters = 
+{ 
+  ... 
+  afCustom: [                      
+    { paramKey: "af_xplatform", keys: [], defaultValue: "true" }, 
+  ], 
+};</code></pre>
+            </li>
+            <li>
+              Fire an impression - verify the method <code>generateOneLinkURL</code> was
+              successful and call the method <code>fireImpressionsLink</code> to fire the
+              impression.
+              <pre>
+                <code style="display:block; white-space:pre-wrap">
+var OL_result = window.AF_SMART_SCRIPT.generateOneLinkURL({
+  oneLinkURL,
+  afParameters: afParameters,
+});
+
+// Verify that the returned result from generateOneLinkURL() is not null. 
+// If verified, fire the impression.
+if (OL_result) {
+  // The following command will fire the impression.
+  // The impression will fire to https://impressions.onelink.me//....
+  // The wait is a temporary bug fix
+  setTimeout(() => {
+    window.AF_SMART_SCRIPT.fireImpressionsLink();
+    console.log("Impression fired");
+  }, 1000);
+}
+                </code>
+              </pre>
+            </li>
+          </ol>
+          <h4><b>Create installation links</b></h4>
+          <h4>
+            In this section we will create platform-specific installation links,
+            the link will route the user to the relevant store (e.g. Steam
+            store).<br />
+            For each redirection button in the page we will run the Smart-Script
+            method <code>generateDirectClickURL</code>. If generation is
+            successful, the created link will be placed as the link behind the
+            button. <br />
+            The method <code>generateDirectClickURL</code> accepts the following
+            arguments:
+            <ul>
+              <li>
+                <code>afParameters</code>: these are the same attribution
+                parameters we've collected to send with the impression in the
+                previous section. The <code>af_xplatform</code> is removed since
+                it is no longer required.
+              </li>
+              <li>
+                <code>platform</code>: The platform this link aims for, e.g.
+                steam, epic, playstation etc.
+              </li>
+              <li><code>app_id</code>: The application ID in this platform</li>
+              <li>
+                <code>redirectURL</code>: The URL the user will be redirected in
+                order to install the game, e.g. the link in the steam store
+              </li>
+            </ul>
+          </h4>
+          <h4><b>Platform specific links created on this page:</b></h4>
+          <div id="output_url"></div>
+        </div>
+      </div>
+    </div>
+    <!-- SCRIPTS -->
+    <script src="https://onelinksmartscript.appsflyer.com/onelink-smart-script-latest.js"></script>
+    <script>
+      // @@@@ Section START - Fire an impression @@@@
+
+      // The impression is created using the Smart Script.
+      // In order to create an impression the Smart Script requires a OneLink template, with cross-platform attribution enabled.
+
+      // Firing an imperssion includes the following steps:
+      // 1. Initializing the Smart Script arguments. These arguments will carry the impression data, e.g. media_source, campaign, ad_name etc.
+      //    The argument values are retrieved from the incoming URL query parameters (e.g. UTM parameters) or default values.
+      //    Information regarding more Smart Script arguments can be found here https://dev.appsflyer.com/hc/docs/dl_smart_script_v2#arguments.
+      // 2. Call the Smart Script method generateOneLinkURL(). The method generates the infrastructure to fire an impression in the next step.
+      //    Information regarding this method can be found here https://dev.appsflyer.com/hc/docs/dl_smart_script_v2#manually-configure-the-script
+      // 3. Fire an impression - verify the method generateOneLinkURL was successful and call the method fireImpressionsLink() to fire the impression.
+
+      // -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+      // ** Step 1 ** Initializing Smart Script arguments
+      // TODO: change to your onelink template URL
+      var oneLinkURL = "https://gaming-demo-landing-page.onelink.me/AG7A";
+
+      // TODO: Define the mapping of incoming URL parameters to outgoing parameters (impression and install links)
+      var channel = { keys: ["inchnl"] };
+      var mediaSource = {
+        keys: ["utm_source"],
+        defaultValue: "game_media_source",
+      };
+      var campaign = {
+        keys: ["campaign_name", "utm_campaign"],
+        defaultValue: "game_landing_page",
+      };
+      var ad = {
+        keys: ["ad_name", "utm_content"],
+        defaultValue: "game_ad_name",
+      };
+      var adset = { keys: ["adset_name"], defaultValue: "game_adset_name" };
+      // extracting parameters for facebook click
+      var afSub2 = { keys: ["fbclid"] };
+      var fbclid_out = {paramKey: "fbclid", keys: ["fbclid"]};
+      var googleClickIdKey = "gclid";
+
+      var afParameters = {
+        mediaSource: mediaSource,
+        campaign: campaign,
+        ad: ad,
+        adSet: adset,
+        afSub2: afSub2,
+        googleClickIdKey: googleClickIdKey,
+        afCustom: [
+          // !!! IMPORTANT !!!
+          // The following param is mandatory for cross-platform impression. MUST BE ADDED
+          { paramKey: "af_xplatform", keys: [], defaultValue: "true" },
+          fbclid_out
+        ],
+      };
+
+      // ** Step 2 ** - Call the Smart Script method generateOneLinkURL(). The method generates the infrastructure to fire an impression in the next step
+      // Calling the function after embedding the code will be through a global parameter on the window object called window.AF_SMART_SCRIPT
+      var OL_result = window.AF_SMART_SCRIPT.generateOneLinkURL({
+        oneLinkURL,
+        afParameters: afParameters,
+      });
+
+      // ** Step 3 ** - Verify that the returned result from generateOneLinkURL() is not null. If verified, fire the impression.
+      // Read more https://dev.appsflyer.com/hc/docs/create-direct-click-url
+      if (OL_result) {
+        // The following command will fire the impression.
+        // The impression will fire to https://impressions.onelink.me//....
+        // The wait is a temporary bug fix
+        setTimeout(() => {
+          window.AF_SMART_SCRIPT.fireImpressionsLink();
+          console.log("Impression fired");
+        }, 1000);
+      }
+      // @@@@ Section END - Fire an impression @@@@
+
+      // @@@@ Section START - Create installation links @@@@
+      // In this section we will create platform-specific installation links, the link will route the user to the relevant store (e.g. Steam store).
+
+      // For each redirection button in the page we will run the Smart-Script method generateDirectClickURL. If generation is successful,
+      // the created link will be placed as the link behind the button.
+
+      // The method generateDirectClickURL accepts the following arguments:
+      //  - afParameters: these are the same attribution parameters we've collected to send with the impression in the previous section.
+      //  - platform: The platform this link aims for, e.g. steam, epic, playstation etc.
+      //  - app_id: The application ID in this platform
+      //  - redirectURL: The URL the user will be redirected in order to install the game, e.g. the link in the steam store
+
+      // TODO: update the appid and redirectURL for each platform
+      var platforms = {
+        steam: {
+          platformName: "steam",
+          appid: "1234561", // <--- DON'T FORGET TO USE YOUR OWN appid
+          redirectURL: "https://store.steampowered.com/app/1176160/Space_Wars/", // <--- DON'T FORGET TO USE YOUR OWN redirect URL (Encoded!)
+        },
+        nativepc: {
+          platformName: "nativepc",
+          appid: "12341234", // <--- DON'T FORGET TO USE YOUR OWN appid
+          redirectURL:
+            "https://github.com/AppsFlyerSDK/appsflyer-unity-sample-app", // <--- DON'T FORGET TO USE YOUR OWN redirect URL (Encoded!)
+        },
+        epic: {
+          platformName: "epic",
+          appid: "butterflyer", // <--- DON'T FORGET TO USE YOUR OWN appid
+          redirectURL: "https://store.epicgames.com/en-US/", // <--- DON'T FORGET TO USE YOUR OWN redirectURL (Encoded!)
+        },
+        quest: {
+          platformName: "quest",
+          appid: "questtest", // <--- DON'T FORGET TO USE YOUR OWN appid
+          redirectURL: "https://www.oculus.com/experiences/quest/", // <--- DON'T FORGET TO USE YOUR OWN redirectURL (Encoded!)
+        },
+        nintendo: {
+          platformName: "switch",
+          appid: "12345123451234", // <--- DON'T FORGET TO USE YOUR OWN appid
+          redirectURL: "https://www.nintendo.com/store/", // <--- DON'T FORGET TO USE YOUR OWN redirectURL (Encoded!)
+        },
+        xbox: {
+          platformName: "xbox",
+          appid: "x1b2o3x4t5e6", // <--- DON'T FORGET TO USE YOUR OWN appid
+          redirectURL: "https://www.xbox.com/en-US/microsoft-store", // <--- DON'T FORGET TO USE YOUR OWN redirectURL (Encoded!)
+        },
+        playstation: {
+          platformName: "playstation",
+          appid: "psn-test", // <--- DON'T FORGET TO USE YOUR OWN appid
+          redirectURL: "https://store.playstation.com/en-il/pages/latest", // <--- DON'T FORGET TO USE YOUR OWN redirectURL (Encoded!)
+        },
+        android: {
+          platformName: "android",
+          appid: "com.appsflyer.onelinksimulator", // <--- DON'T FORGET TO USE YOUR OWN appid
+          redirectURL:
+            "https://play.google.com/store/apps/details?id=com.appsflyer.onelinksimulator&hl=en&gl=US", // <--- redirect URL is irrelevant for iOS & Android
+        },
+        ios: {
+          platformName: "ios",
+          appid: "id1550796743", // <--- DON'T FORGET TO USE YOUR OWN appid
+          redirectURL:
+            "https://apps.apple.com/us/app/onelink-simulator/id1550796743", // <--- redirect URL is irrelevant for iOS & Android
+        },
+      };
+
+      // @@@@@@ Remove "af_xplatform=true" custom parameter from the afParamaters
+      // Why? This code is reusing afParameters to create both impression link above the direct click URL below.
+      // The "af_xplatform=true" is relevant only to the imperssions link, but redundant and even confusing
+      // in the direct click URL. This why the following code remove this parameter.
+
+      // Find index of custom parameter "af_xplatform=true" to remove from afCustom array
+      const indexToRemove = afParameters.afCustom.findIndex(
+        (item) => item.paramKey === "af_xplatform"
+      );
+      // Remove item from afCustom array at the found index
+      if (indexToRemove !== -1) {
+        afParameters.afCustom.splice(indexToRemove, 1);
+      }
+      // @@@ End of "af_xplatform=true" removal
+
+      // iterating the platforms object
+      for (const platformKey in platforms) {
+        let result_url = "No output from script";
+        const platform = platforms[platformKey];
+        // generating direct click URL for the platform
+        // READ MORE: https://dev.appsflyer.com/hc/docs/create-direct-click-url
+        const result = window.AF_SMART_SCRIPT.generateDirectClickURL({
+          afParameters: afParameters,
+          platform: platform.platformName,
+          app_id: platform.appid,
+          redirectURL: platform.redirectURL,
+        });
+
+        if (result) {
+          result_url = result.clickURL;
+          // update the href attribute for each store banner
+          if (document.getElementById(platformKey + "_link"))
+            document
+              .getElementById(platformKey + "_link")
+              .setAttribute("href", result_url);
+
+          // add the url to the output list of links
+          document.getElementById(
+            "output_url"
+          ).innerHTML += `<b>${platformKey}</b> -> ${result_url} <br/><br/>`;
+        }
+      }
+      // @@@@ Create installation links - Section END @@@@
+    </script>
+  </body>
+</html>
